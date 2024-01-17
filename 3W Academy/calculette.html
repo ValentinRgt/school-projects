@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>JS Avancée</title>
+    </head>
+    <body>
+        
+        <script type="text/javascript">
+            function Calc(numberOne, numberTwo) {
+                this.nbrOne = numberOne;
+                this.nbrTwo = numberTwo;
+            }
+            
+            Calc.prototype.additionner = function() {
+                return this.nbrOne + this.nbrTwo;
+            };
+            
+            Calc.prototype.multiplier = function() {
+                return this.nbrOne * this.nbrTwo;
+            };
+            
+            Calc.prototype.diviser = function() {
+                if(this.nbrTwo == 0) {
+                    throw new Error('Tu peux pas diviser par zéro');
+                }
+            
+                return this.nbrOne / this.nbrTwo;
+            };
+            
+            Calc.prototype.soustraire = function() {
+                return this.nbrOne - this.nbrTwo;
+            };
+            
+            let app = new Calc(25, 12);
+            
+            document.write(app.additionner() + "<br>");
+            document.write(app.multiplier() + "<br>");
+            document.write(app.diviser() + "<br>");
+            document.write(app.soustraire() + "<br>");
+
+        </script>
+        
+    </body>
+</html>

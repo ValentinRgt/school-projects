@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>JS Avancée</title>
+    </head>
+    <body>
+        
+        <script type="text/javascript">
+            class Hierarchy {
+                isCDI(){
+                    return "cdi";
+                }
+                isCDD(){
+                    return "cdd";
+                }
+                isStage(){
+                    return "stage";
+                }
+                isAlternant(){
+                    return "alternance";
+                }
+            }
+            
+            class Staff extends Hierarchy{
+                name(firstname, lastname){
+                    return firstname + " " + lastname + "'s";
+                }
+            }
+
+            const SStaff = new Staff();
+            
+            document.write(SStaff.name("Jean", "Dupont") + " est en  " + SStaff.isCDI() + "<br>")
+            document.write(SStaff.name("Jean", "Dupuis") + " est en  " + SStaff.isCDD() + "<br>")
+            document.write(SStaff.name("Jean", "Delacour") + " est en  " + SStaff.isStage() + "<br>")
+            document.write(SStaff.name("Jean", "Pierre") + " est en  " + SStaff.isAlternant() + "<br>")
+            
+        </script>
+        
+    </body>
+</html>

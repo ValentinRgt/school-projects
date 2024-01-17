@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>JS Avancée - Formulaire</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        
+        <div class="container mt-5">
+            
+            <div class="alert alert-info" id="alert" style="display:none">
+                <p>Merci de corriger les erreurs ci-dessous :</p>
+                <ul id="errorList"></ul>
+            </div>
+            
+            <div class="alert alert-success" id="success" style="display:none">
+                <p>Vos informations ont bien été enregistrés !</p>
+                <ul>
+                    <li id="username"></li>
+                    <li id="email"></li>
+                    <li id="password"></li>
+                    <li id="confirmPassword"></li>
+                </ul>
+            </div>
+            
+            <form class="row g-3" id="form" onsubmit="return false">
+                
+                <div class="col-md-12">
+                    <label for="validationDefault01" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="validationDefault01" onchange="checkIsValid(this)">
+                </div>
+                  
+                <div class="col-md-12">
+                    <label for="validationDefault02" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="validationDefault02" onchange="checkIsValid(this); checkIsEmail(this)">
+                </div>
+                  
+                <div class="col-md-12">
+                    <label for="validationDefault02" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="validationDefault03" onchange="checkIsValid(this)">
+                </div>
+                  
+                <div class="col-md-12">
+                    <label for="validationDefault02" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="validationDefault04" onchange="checkIsValid(this); checkIsPassword(this)">
+                </div>
+    
+                <div class="col-12">
+                    <button class="btn btn-primary" type="submit">Submit form</button>
+                </div>
+            </form>
+            
+            
+        </div>
+        
+        <script type="text/javascript">
+        
+            var form = document.getElementById("form");
+            var alertInfo = document.getElementById("alert");
+            var successInfo = document.getElementById("success");
+            
+            form.addEventListener('submit', function(e){
+                var username = document.getElementById("validationDefault01");
+                var email = document.getElementById("validationDefault02");
+                var password = document.getElementById("validationDefault03");
+                var confirmPassword = document.getElementById("validationDefault04");
+                
+                if(username.value.length == 0){
+                    alertInfo.style.display = "";
+                    document.getElementById("errorList").innerHTML += "<li>Champ Nom d'utilisateur vide</li>"
+                }
+                
+                if(email.value.length == 0){
+                    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value)){
+                        document.getElementById("errorList").innerHTML += "<li>Champ Adresse email invalid ou vide </li>"
+                    }
+                }
+                
+                if(password.value.length == 0){
+                    alertInfo.style.display = "";
+                    document.getElementById("errorList").innerHTML += "<li>Champ mot de passe vide</li>"
+                }
+            
+                if(confirmPassword.value.length == 0){
+                    alertInfo.style.display = "";
+                    document.getElementById("errorList").innerHTML += "<li>Champ vérification mot de passe vide</li>"
+                }
+                
+                if(password.value !== confirmPassword.value) {
+                    alertInfo.style.display = "";
+                    document.getElementById("errorList").innerHTML += "<li>Les mot de passe ne sont pas identique !</li>"
+                }
+                
+                if(username.value.length !== 0 && email.value.length !== 0 && password.value.length !== 0 && confirmPassword.value.length !== 0 && password.value == confirmPassword.value) {
+                    successInfo.style.display = "";
+                    document.getElementById("username").textContent = "Username : " + username.value;
+                    document.getElementById("email").textContent = "Email : " + email.value;
+                    document.getElementById("password").textContent = "Password : " + password.value;
+                    document.getElementById("confirmPassword").textContent = "ConfirmPassword : " + confirmPassword.value;
+                }
+                
+                setTimeout(function(){
+                    alertInfo.style.display = "none";
+                    successInfo.style.display = "none";
+                    document.getElementById("errorList").innerHTML = "";
+                }, 5000)
+                
+            });
+        
+            function checkIsValid(e){
+                var inputForm = document.getElementById(e.id);
+                if(inputForm.value.length >= 0 && inputForm.type !== "email"){
+                    inputForm.classList.add("is-valid");
+                    inputForm.classList.remove("is-invalid");
+                }else{
+                    inputForm.classList.remove("is-valid");
+                    inputForm.classList.add("is-invalid");
+                }
+            }
+            
+            function checkIsPassword(e){
+                var inputForm = document.getElementById(e.id);
+                var password = document.getElementById("validationDefault03");
+                if(password.value == inputForm.value && inputForm.value.length >= 0){
+                    inputForm.classList.add("is-valid");
+                    inputForm.classList.remove("is-invalid");
+                }else{
+                    inputForm.classList.remove("is-valid");
+                    inputForm.classList.add("is-invalid");
+                }
+            }
+            
+            function checkIsEmail(e){
+                var inputForm = document.getElementById(e.id);
+                if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(inputForm.value)){
+                    if(inputForm.value.length >= 0){
+                        inputForm.classList.add("is-valid");
+                        inputForm.classList.remove("is-invalid");
+                    }else{
+                        inputForm.classList.remove("is-valid");
+                        inputForm.classList.add("is-invalid");
+                    }  
+                }
+            }
+            
+        </script>
+        
+    </body>
+</html>

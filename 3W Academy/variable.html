@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>JS Avancée</title>
+    </head>
+    <body>
+        
+        <script type="text/javascript">
+            // 1 - Différence entre une var et un let
+            // let let_1 = "w3school";
+            // let let_1 = 5;
+            
+            // var var_1 = "w3school";
+            // var var_1 = 5;
+            
+            // document.write(let_1);
+            // document.write(var_1);
+            
+            
+            // 2 - Portée du bloc
+            
+            // {
+            //     let let_2 = "Bonjour JS";
+            //     document.write(let_2);
+            //     var var_2 = "Bonjour JS";
+            // }
+            
+            // document.write(var_2);
+        
+            
+            // function swap(x,y){
+            //   if(x!=y){
+            //       var old=x;
+            //       let tmp=x;
+            //       x=y;
+            //       y=tmp;
+            //   }
+            //   console.log(typeof(old))
+            //   console.log(typeof(tmp))
+            // }
+            
+            // swap(12, 2)
+            
+            // function sum(x, y){
+            //     return x+y;
+            // }
+            
+            // document.write(sum(10, 400))
+            
+            // let me="zak";
+            // let age=29;
+            // let res = `Je suis ${me} et j'ai ${age} ans`
+            
+            // document.write(res)
+            
+            // let i = 0;
+            // while(i<10){
+            //     console.log(i++);
+            // }
+            
+            // Exo 1
+            
+            let array = [16, 11, 9, 18, 15];
+            
+            for (const element of array) {
+                console.log(element+1);
+            }
+            
+            // Exo 2
+            
+            let family = ["Père : Sébastien", "Mère : Aurélie", "Soeur : Louna"];
+            
+            for (const element of family) {
+                //alert(element);
+                console.log(element);
+            }
+            
+            // Exo 3 
+            
+            let sum = [120, 140, 60, 180, 105];
+            let total_sum = 0;
+            for (const element of sum) {
+                total_sum += element;
+            }
+            console.log("Total est : " + total_sum);
+            
+            // Exo 4
+            
+            let avg = [1, 10, 6, 80, 5, 19, 15];
+            let total_avg = 0;
+            for (const element of avg) {
+                 total_avg += element;
+            }
+            
+            console.log("Moyenne est : " + total_avg/avg.length)
+            
+            // Exo 5
+        
+            let factor = [1, 10, 6, 80, 5, 19, 15];
+
+            const fact = (nbr) => {
+                if (nbr == 0){return 1;}
+                return nbr * fact(nbr-1);
+            }
+            
+            for (const data of factor)
+            {
+                console.log(fact(data));
+            }
+            
+
+            // Exo 6
+            
+            let sorter = [1, 10, 6, 80, -5, 19, 15];
+            console.log(Math.max(...sorter))
+            
+            // Exo 7
+            
+            let sorter1 = [1, 10, -6, 80, -5, 19, 15];
+            console.log(Math.min(...sorter1))
+            
+           // Exo 8
+            
+            let sorter2 = [1, 10, -6, 80, -5, 19, 15];
+            sorter2.sort((a, b) => a - b);
+            let i = 0; 
+            for (const elem of sorter2){
+                console.log(i++ + " = " + elem);
+            }
+        </script>
+        
+    </body>
+</html>
