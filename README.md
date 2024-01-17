@@ -13,3 +13,10 @@ Je ne suis pas responsable des diverses actions qui seront faites avec les codes
 ---
 
 Les différents codes écrits ne reflétant pas mon niveau dans la programmation, ils respectent simplement les critères de mis en pratique demandée par les formateur/rices.
+
+---
+
+## Diplôme obtenus
+
+Bac+5 - Epitech<br>
+Bac+2 - 3W Academy
