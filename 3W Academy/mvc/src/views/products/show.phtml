@@ -1,0 +1,21 @@
+<h1><?php echo $data["product"]->name; ?></h1>
+
+
+<section class="row">
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Price : <?php echo number_format(($data["product"]->price)/100, 2, ',', ' '); ?> €</h5>
+                <p class="card-text">In Stock : <?php echo $data["product"]->stock; ?></p>
+                <?php if(!empty($data["modules"]["auth"]->get_session())){?>
+                    <form method="post"><input type="hidden" name="product_id" value="<?php echo $data["product"]->id; ?>"></inpout><button class="btn btn-primary" type="submit">Get basket</button></form>
+                <?php }else{ ?>
+                      <a class="btn btn-secondary" href="https://valentinragot.sites.3wa.io/php_avance/mvc/login">Log In</a>
+                <?php } ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+       <img src="<?php echo $data["product"]->image; ?>" width="300px"/> 
+    </div>
+</section>

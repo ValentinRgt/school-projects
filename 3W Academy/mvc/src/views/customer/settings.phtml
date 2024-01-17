@@ -1,0 +1,45 @@
+<h1>My account</h1>
+
+<form method="post">
+
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label for="">Firstname</label>
+            <input class="form-control" type="email" name="email" value="<?php echo $data["user"]->firstname; ?>"/>
+        </div>
+        
+        <div class="col-md-6 form-group">
+            <label for="">Lastname</label>
+            <input class="form-control" type="email" name="email" value="<?php echo $data["user"]->lastname; ?>"/>
+        </div>
+
+        <div class="col-md-6 form-group">
+            <label for="">Address</label>
+            <input class="form-control" type="email" name="email" value="<?php echo $data["user"]->address; ?>"/>
+        </div>
+        
+        <div class="col-md-6 form-group">
+            <label for="">Postal Code</label>
+            <input class="form-control" type="email" name="email" value="<?php echo $data["user"]->postalCode; ?>"/>
+        </div>
+        
+        <div class="col-md-6 form-group">
+            <label for="">Phone</label>
+            <input class="form-control" type="email" name="email" value="<?php echo $data["user"]->phone; ?>"/>
+        </div>
+        <?php if($data["user"]->isAdmin){ ?>
+            <div class="col-md-6 form-group">
+                <label for=""></label>
+                <input class="form-control" type="text" value="You are admin of website" disabled/>
+            </div>
+        <?php } ?>
+    </div>
+    
+    <div class="col-md-12 form-group">
+        <label for="">Email</label>
+        <input class="form-control" type="email" name="email" value="<?php echo $data["user"]->email; ?>"/>
+    </div>
+    
+    <button class="col-md-12 btn btn-primary mt-3" type="submit">Save settings</button>
+    
+</form>

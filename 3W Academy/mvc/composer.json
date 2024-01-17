@@ -1,0 +1,17 @@
+{
+    "name": "valentinragot/mvc",
+    "authors": [
+        {
+            "name": "Valentin RAGOT",
+            "email": "valentin.ragot@3wa.io"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "require": {
+        "bramus/router": "^1.6"
+    }
+}

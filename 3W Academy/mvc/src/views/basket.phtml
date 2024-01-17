@@ -1,0 +1,67 @@
+<h1>Basket</h1>
+
+<section>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col"></th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Total</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $i = 0; foreach($data["baskets"] as $key => $value) { $i++; ?>
+                        <tr>
+                            <th scope="row"><?php echo $i; ?></th>
+                            <td><img src="<?php echo $value["image"]; ?>" width="100px"></td>
+                            <td><?php echo $value["name"]; ?></td>
+                            <td><?php echo $value["quantity"]; ?></td>
+                            <td><?php echo number_format(($value["price"])/100, 2, ',', ' '); ?> €</td>
+                            <td><?php echo number_format(($value["price"]*$value["quantity"])/100, 2, ',', ' '); ?> €</td>
+                            <td>
+                                <form method="post">
+                                    <input type="hidden" name="product_id" value="<?php echo $value["id"]; ?>">
+                                    <input type="hidden" name="quantity" value="<?php echo $value["quantity"]; ?>">
+                                    <button class="btn btn-success" type="submit" name="more">+</button>
+                                    <button class="btn btn-primary" type="submit" name="less">-</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-9"></div>
+        <div class="col-md-3">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Subtotal</th>
+                        <td><?php echo number_format(($data["totalPrice"])/100, 2, ',', ' '); ?> €</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">VAT (+20%)</th>
+                        <td><?php echo number_format(($data["totalVAT"])/100, 2, ',', ' '); ?> €</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Total</th>
+                        <td><?php echo number_format(($data["totalPriceVAT"])/100, 2, ',', ' '); ?> €</td>
+                    </tr>
+                </tbody>
+            </table>
+            <form method="post"><button class="btn btn-success col-md-12" type="submit" name="pay">Pay <?php echo number_format(($data["totalPriceVAT"])/100, 2, ',', ' '); ?> €</button></form>
+        </div>
+    </div>
+</section>

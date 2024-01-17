@@ -1,1 +1,2 @@
-# school-projects
+Cliquer sur les images ci-dessous pour vous rendre une branche annexe <br />
+[![Revenir à la branche Principale](https://img.shields.io/badge/Branche%20Principale-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ValentinRgt/school-projects)

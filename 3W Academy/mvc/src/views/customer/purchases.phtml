@@ -1,0 +1,32 @@
+<h1>My purchases</h1>
+
+<section>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col"></th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total Price</th>
+                        <th scope="col">Purchase Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $i = 0; foreach($data["purchases"] as $key => $value) { $i++; ?>
+                        <tr>
+                            <th scope="row"><?php echo $i; ?></th>
+                            <td><img src="<?php echo $value["image"]; ?>" width="100px"></td>
+                            <td><?php echo $value["name"]; ?></td>
+                            <td><?php echo $value["quantity"]; ?></td>
+                            <td><?php echo number_format(($value["price"]*$value["quantity"])*(1+20/100)/100, 2, ',', ' '); ?> €</td>
+                            <td><?php echo $value["purchase_at"]; ?></td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
