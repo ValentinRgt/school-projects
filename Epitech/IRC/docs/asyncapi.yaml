@@ -1,0 +1,238 @@
+asyncapi: '2.6.0'
+info:
+  title: Chat Application API
+  version: '1.0.0'
+  description: API pour une application de chat incluant WebSocket et HTTP API.
+servers:
+  websocket:
+    url: ws://votre-domaine.com
+    protocol: ws
+    description: Serveur WebSocket sécurisé pour l'application de chat.
+  api:
+    url: http://localhost:{port}
+    protocol: http
+    description: Serveur API HTTP pour les opérations de gestion de l'application de chat.
+    variables:
+      port:
+        default: '3000'
+        description: Port HTTP pour le serveur API
+channels:
+  user/login:
+    description: Canal pour la connexion des utilisateurs via WebSocket
+    subscribe:
+      summary: Informe les autres utilisateurs lorsqu'un utilisateur se connecte.
+      message:
+        $ref: '#/components/messages/UserLogin'
+    servers:
+      - websocket
+  user/logout:
+    description: Canal pour la déconnexion des utilisateurs via WebSocket
+    subscribe:
+      summary: Informe les autres utilisateurs lorsqu'un utilisateur se déconnecte.
+      message:
+        $ref: '#/components/messages/UserLogout'
+    servers:
+      - websocket
+  message:
+    description: Canal pour l'envoi et la réception de messages dans une salle via WebSocket
+    publish:
+      summary: Permet d'envoyer des messages dans une salle.
+      message:
+        $ref: '#/components/messages/RoomMessage'
+    subscribe:
+      summary: Permet de recevoir des messages dans une salle.
+      message:
+        $ref: '#/components/messages/RoomMessage'
+    servers:
+      - websocket
+  command/nickname:
+    description: Canal pour changer le surnom d'un utilisateur via WebSocket
+    publish:
+      summary: Permet à un utilisateur de changer son surnom.
+      message:
+        $ref: '#/components/messages/NicknameCommand'
+    servers:
+      - websocket
+  command/create:
+    description: Canal pour créer une nouvelle salle via WebSocket
+    publish:
+      summary: Permet de créer une nouvelle salle.
+      message:
+        $ref: '#/components/messages/CreateRoomCommand'
+    servers:
+      - websocket
+  command/delete:
+    description: Canal pour supprimer une salle via WebSocket
+    publish:
+      summary: Permet de supprimer une salle.
+      message:
+        $ref: '#/components/messages/DeleteRoomCommand'
+    servers:
+      - websocket
+  command/join:
+    description: Canal pour rejoindre une salle via WebSocket
+    publish:
+      summary: Permet à un utilisateur de rejoindre une salle.
+      message:
+        $ref: '#/components/messages/JoinRoomCommand'
+    servers:
+      - websocket
+  command/quit:
+    description: Canal pour quitter une salle via WebSocket
+    publish:
+      summary: Permet à un utilisateur de quitter une salle.
+      message:
+        $ref: '#/components/messages/QuitRoomCommand'
+    servers:
+      - websocket
+  command/users:
+    description: Canal pour lister tous les utilisateurs connectés via WebSocket
+    publish:
+      summary: Liste tous les utilisateurs connectés.
+      message:
+        $ref: '#/components/messages/UsersCommand'
+    servers:
+      - websocket
+  command/msg:
+    description: Canal pour envoyer un message privé à un utilisateur via WebSocket
+    publish:
+      summary: Envoie un message privé à un utilisateur.
+      message:
+        $ref: '#/components/messages/PrivateMessageCommand'
+    servers:
+      - websocket
+components:
+  messages:
+    UserLogin:
+      name: UserLogin
+      title: User Login
+      summary: A user logs in via WebSocket.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/UserEvent'
+    UserLogout:
+      name: UserLogout
+      title: User Logout
+      summary: A user logs out via WebSocket.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/UserEvent'
+    RoomMessage:
+      name: RoomMessage
+      title: Room Message
+      summary: Message in a room via WebSocket.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/RoomMessagePayload'
+    NicknameCommand:
+      name: NicknameCommand
+      title: Change Nickname
+      summary: Change user's nickname via WebSocket.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/NicknamePayload'
+    CreateRoomCommand:
+      name: CreateRoomCommand
+      title: Create Room
+      summary: Create a new room via WebSocket.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/RoomPayload'
+    DeleteRoomCommand:
+      name: DeleteRoomCommand
+      title: Delete Room
+      summary: Delete a room via WebSocket.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/RoomPayload'
+    JoinRoomCommand:
+      name: JoinRoomCommand
+      title: Join Room
+      summary: Join a room via WebSocket.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/RoomPayload'
+    QuitRoomCommand:
+      name: QuitRoomCommand
+      title: Quit Room
+      summary: Quit a room via WebSocket.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/RoomPayload'
+    UsersCommand:
+      name: UsersCommand
+      title: List Users
+      summary: List connected users via WebSocket.
+      contentType: application/json
+      payload:
+        type: object
+    PrivateMessageCommand:
+      name: PrivateMessageCommand
+      title: Private Message
+      summary: Send a private message to a user via WebSocket.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/PrivateMessagePayload'
+  schemas:
+    UserEvent:
+      type: object
+      properties:
+        event:
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+        nickname:
+          type: string
+          nullable: true
+        email:
+          type: string
+        password:
+          type: string
+        socketId:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
+        lastLogin:
+          type: string
+          format: date-time
+          nullable: true
+    RoomMessagePayload:
+      type: object
+      properties:
+        roomId:
+          type: string
+        message:
+          type: string
+        username:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    NicknamePayload:
+      type: object
+      properties:
+        nickname:
+          type: string
+    RoomPayload:
+      type: object
+      properties:
+        name:
+          type: string
+    PrivateMessagePayload:
+      type: object
+      properties:
+        user:
+          type: string
+        message:
+          type: string
