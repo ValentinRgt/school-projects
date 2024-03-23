@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  redis:
+    container_name: 'redis'
+    image: redis:alpine
+    restart: always
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - "6379:6379"
+    networks:
+      - poll-tier
+      - back-tier
+
+  db:
+    container_name: 'db'
+    image: postgres:alpine
+    restart: always
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    networks:
+      - result-tier
+      - back-tier
+
+  poll:
+    container_name: 'poll'
+    build: ./poll
+    restart: always
+    env_file: ./poll/.env
+    ports:
+      - "5000:80"
+    networks:
+      - poll-tier
+    depends_on:
+      - redis
+
+  worker:
+    container_name: 'worker'
+    build: ./worker
+    restart: always
+    env_file: ./worker/.env
+    networks:
+      - back-tier
+    depends_on:
+      - db
+      - redis
+
+  result:
+    container_name: 'result'
+    build: ./result
+    restart: always
+    env_file: ./result/.env
+    ports:
+      - "5001:80"
+    networks:
+      - result-tier
+    depends_on:
+      - db
+
+
+volumes:
+  db-data:
+
+networks:
+  poll-tier:
+  result-tier:
+  back-tier:
